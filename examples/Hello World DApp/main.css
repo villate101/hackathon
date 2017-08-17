@@ -1,0 +1,25 @@
+body {
+	background-color: #3a3a51;
+}
+
+.container {
+	color: #fff;
+}
+
+.container h1 {
+	color: #fff;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.container p {
+	font-size: 18px;
+}
+
+.container .color {
+	color: #3fbbfa;
+}
+
+button {
+	cursor: pointer;
+}
