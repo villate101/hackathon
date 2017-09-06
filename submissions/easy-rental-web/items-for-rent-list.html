@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html style="height: 100%;" lang="en">
+<head>
+    <title>Easy Rental | Items for Renting</title>
+    <script type="text/javascript" src="./js/common-constants.js" ></script>
+    <script type="text/javascript" src="./js/jquery-3.2.1.min.js" ></script>
+    <script type="text/javascript" src="./js/pure.min.js" ></script>
+    <script type="text/javascript" src="./js/sha256.min.js" ></script>
+    <script type="text/javascript" src="./js/web3.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+</head>
+<body style="height: 100%;">
+<div class="container" style="height: 100%;">
+    <div class="row">
+        <div class="form-box" style="width: 100%;">
+            <h2>Add new item to rent</h2>
+
+            <form id="task-form" action="index.html" style="width: 100%;">
+                <div class="row" style="margin-bottom: 5px;">
+                    <label for="itemName" class="col-sm-4">Item Name</label>
+                    <input type="text" id="itemName" required class="col-sm-6">
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <label for="advanceTimeout" class="col-sm-4" >Advance expiration (hours)</label>
+                    <input type="number" id="advanceTimeout" required class="col-sm-6">
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <label for="amount" class="col-sm-4">Rent Amount (wei)</label>
+                    <input type="number" id="amount" required class="col-sm-6">
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <label for="advanceAmount" class="col-sm-4">Advance Amount (wei</label>
+                    <input type="number" id="advanceAmount" required class="col-sm-6">
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <label for="description" class="col-sm-4">Description</label>
+                    <input type="text" id="description" required class="col-sm-6">
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <input type="submit" id="submit" value="Add Item" class="btn btn-primary"> &nbsp;&nbsp;
+                    <a href="index.html" class="btn btn-primary"> Back to Home</a>
+                </div>
+                <div></div>
+            </form>
+            <hr />
+        </div>
+    </div>
+    <div class="row" style="height: 25%;">
+        <div class="task-box" style="width: 100%;">
+            <ul id="task-list" class="list-group" style="width: 100%;">
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="toolbar" style="width: 100%;">
+    <ul id="notifications"  >
+
+    </ul>
+</div>
+
+<script type="text/javascript" src="./js/items-for-rent-list.js" ></script>
+</body>
+</html>

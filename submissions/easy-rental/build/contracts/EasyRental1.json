@@ -1,0 +1,1613 @@
+{
+  "contract_name": "EasyRental1",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "renterAdd",
+          "type": "address"
+        },
+        {
+          "name": "clientAdd",
+          "type": "address"
+        },
+        {
+          "name": "advanceAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "rentAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        },
+        {
+          "name": "advanceTimeoutHours",
+          "type": "int256"
+        }
+      ],
+      "name": "createRentedItem",
+      "outputs": [],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "checkIfIsOver",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "checkIfIsLive",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "getShelvedItemInfo",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "confirmItemReturn",
+      "outputs": [],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "countRentedItems",
+      "outputs": [
+        {
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "itemExists",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "renterAdd",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "clientAdd",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "advanceAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "rentAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "itemHash",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "name": "advanceTimeoutHours",
+          "type": "int256"
+        }
+      ],
+      "name": "LogInit",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "LogEventCreatedWithItemHash",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "LogSenderDoesParticipate",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "party",
+          "type": "string"
+        }
+      ],
+      "name": "LogSenderConfirmedReturn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "leftside",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "rightside",
+          "type": "uint256"
+        }
+      ],
+      "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "itemHash",
+          "type": "bytes"
+        }
+      ],
+      "name": "LogItemAlreadyExistsAborting",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "name": "LogItemCount",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "renterAddress",
+          "type": "address"
+        }
+      ],
+      "name": "LogRentAmountTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "name": "LogContractBalance",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b6112ad8061001f6000396000f300606060405236156100805763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166337cc350e81146100855780633bf2a310146100ef578063789b1a3b14610154578063a28925d8146101b9578063afc0978c14610250578063d36a97b214610298578063e931bd4114610154575b600080fd5b6100ed600160a060020a0360048035821691602480359091169160443591606435919060a49060843590810190830135806020601f82018190048102016040519081016040528181529291906020840183838082843750949650509335935061032292505050565b005b34156100fa57600080fd5b61014060046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284375094965061086b95505050505050565b604051901515815260200160405180910390f35b341561015f57600080fd5b61014060046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284375094965061096495505050505050565b604051901515815260200160405180910390f35b34156101c457600080fd5b61020a60046024813581810190830135806020601f820181900481020160405190810160405281815292919060208401838380828437509496506109e395505050505050565b604051968752602087019590955292151560408087019190915291151560608601521515608085015290151560a084015290151560c083015260e0909101905180910390f35b6100ed60046024813581810190830135806020601f82018190048102016040519081016040528181529291906020840183838082843750949650610d1c95505050505050565b005b34156102a357600080fd5b6102ab6111fb565b60405190815260200160405180910390f35b341561015f57600080fd5b61014060046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284375094965061096495505050505050565b604051901515815260200160405180910390f35b7f014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9868686868686604051600160a060020a03808816825286166020820152604081018590526060810184905260a0810182905260c06080820181815290820184818151815260200191508051906020019080838360005b838110156103b25780820151818401525b602001610399565b50505050905090810190601f1680156103df5780820380516001836020036101000a031916815260200191505b5097505050505050505060405180910390a16103fa82610964565b1561049d577f528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf8260405160208082528190810183818151815260200191508051906020019080838360005b8381101561045e5780820151818401525b602001610445565b50505050905090810190601f16801561048b5780820380516001836020036101000a031916815260200191505b509250505060405180910390a1610863565b600180548101905561014060405190810160405280428152602001828152602001600288600060405160200152604051600160a060020a03919091166c0100000000000000000000000002815260140160206040518083038160008661646e5a03f1151561050a57600080fd5b50506040518051825250602001600287600060405160200152604051600160a060020a03919091166c0100000000000000000000000002815260140160206040518083038160008661646e5a03f1151561056357600080fd5b505060405180518252506020810186905260006040808301829052606083018290526080830182905260a08301829052600160c090930192909252908490518082805190602001908083835b602083106105cf57805182525b601f1990920191602091820191016105af565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051908190039020815181556020820151816001015560408201516002820155606082015160038201556080820151816004015560a082015160058201805460ff191691151591909117905560c08201516005820180549115156101000261ff001990921691909117905560e0820151600582018054911515620100000262ff00001990921691909117905561010082015160058201805491151563010000000263ff00000019909216919091179055610120820151600590910180549115156401000000000264ff00000000199092169190911790555060018054810190557ffd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f48260405160208082528190810183818151815260200191508051906020019080838360005b8381101561073a5780820151818401525b602001610721565b50505050905090810190601f1680156107675780820380516001836020036101000a031916815260200191505b509250505060405180910390a17f76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc30600160a060020a03163160405190815260200160405180910390a1600160a060020a03861683156108fc0284604051600060405180830381858888f1935050505015156107e257600080fd5b7f514fcb68ab7048d4ef428d89bf53f27456a9aed4597bb2e92514d56b314c86538387604051918252600160a060020a031660208201526040908101905180910390a17f76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc30600160a060020a03163160405190815260200160405180910390a15b505050505050565b600080826040518082805190602001908083835b6020831061089f57805182525b601f19909201916020918201910161087f565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390206005015462010000900460ff168061095c57506000826040518082805190602001908083835b6020831061091957805182525b601f1990920191602091820191016108f9565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051908190039020600501546301000000900460ff165b90505b919050565b600080826040518082805190602001908083835b6020831061099857805182525b601f199092019160209182019101610978565b6001836020036101000a03801982511681845116808217855250505050505090500191505090815260200160405190819003902060050154640100000000900460ff1690505b919050565b600080600080600080600080886040518082805190602001908083835b60208310610a2057805182525b601f199092019160209182019101610a00565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390205442036000896040518082805190602001908083835b60208310610a8a57805182525b601f199092019160209182019101610a6a565b6001836020036101000a03801982511681845116808217855250505050505090500191505090815260200160405180910390206004015460008a6040518082805190602001908083835b60208310610af457805182525b601f199092019160209182019101610ad4565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390206005015460ff1660008b6040518082805190602001908083835b60208310610b6257805182525b601f199092019160209182019101610b42565b6001836020036101000a03801982511681845116808217855250505050505090500191505090815260200160405190819003902060050154610100900460ff1660008c6040518082805190602001908083835b60208310610bd557805182525b601f199092019160209182019101610bb5565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390206005015462010000900460ff1660008d6040518082805190602001908083835b60208310610c4957805182525b601f199092019160209182019101610c29565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051908190039020600501546301000000900460ff1660008e6040518082805190602001908083835b60208310610cbe57805182525b601f199092019160209182019101610c9e565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051809103902060050160049054906101000a900460ff1696509650965096509650965096505b919395979092949650565b6000806000836040518082805190602001908083835b60208310610d5257805182525b601f199092019160209182019101610d32565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390206005015462010000900460ff1680610e0f57506000836040518082805190602001908083835b60208310610dcc57805182525b601f199092019160209182019101610dac565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051908190039020600501546301000000900460ff165b15610e19576111f2565b600233600060405160200152604051600160a060020a03919091166c0100000000000000000000000002815260140160206040518083038160008661646e5a03f11515610e6557600080fd5b50506040518051905091506000836040518082805190602001908083835b60208310610ea357805182525b601f199092019160209182019101610e83565b6001836020036101000a0380198251168184511680821785525050505050509050019150509081526020016040519081900390206005810154909150640100000000900460ff168015610f0657506002810154821480610f065750600381015482145b5b156111f2577f67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f4360405160405180910390a18060010154610e1002816000015442031115610ff8576002810154821415610ff3577f2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac816000015442038260010154610e100260405191825260208201526040908101905180910390a133600160a060020a03166108fc82600401549081150290604051600060405180830381858888f193505050501515610fd957600080fd5b60058101805463ff000000191663010000001790556111f2565b6111f2565b6002810154821415611079577f54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b60405160208082526006908201527f72656e74657200000000000000000000000000000000000000000000000000006040808301919091526060909101905180910390a160058101805460ff191660011790555b60038101548214156111f2577f54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b60405160208082526006908201527f73656e64657200000000000000000000000000000000000000000000000000006040808301919091526060909101905180910390a160058101805461ff001916610100179081905560ff16156111f25733600160a060020a03166108fc82600401549081150290604051600060405180830381858888f19350505050151561113c57600080fd5b7f54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b6040516020808252601a908201527f73656e646572202d207472616e7366657220636f6d706c6574650000000000006040808301919091526060909101905180910390a160058101805462ff00001916620100001790557f76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc600160a060020a0330163160405190815260200160405180910390a15b5b5b5b5b505050565b6001545b90565b600080826040518082805190602001908083835b6020831061099857805182525b601f199092019160209182019101610978565b6001836020036101000a03801982511681845116808217855250505050505090500191505090815260200160405190819003902060050154640100000000900460ff1690505b9190505600a165627a7a723058206418d5b3d4ad4694de5785ec08c7ed165b194a215016ee107da7295540c8bd060029",
+  "networks": {
+    "1504308966110": {
+      "events": {
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "_to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x66001aa3273885f60073bc9d56d566d6d6725200",
+      "updated_at": 1504309010250
+    },
+    "1504350082053": {
+      "events": {
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "_to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event"
+        },
+        "0x318f4f9d3ccd05c117f96fa93478272620f34551b93d4f54bf8d3f47f2ea5753": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x1644d48eb12ce5ff460ae9f1bdc3ced13306012453421ed2ced7dcc50a9dbc2b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x1ee9cee007ad3a08ca2e211bd8e2a3834860ed5e",
+      "updated_at": 1504380091523
+    },
+    "1504380459285": {
+      "events": {
+        "0x318f4f9d3ccd05c117f96fa93478272620f34551b93d4f54bf8d3f47f2ea5753": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x1644d48eb12ce5ff460ae9f1bdc3ced13306012453421ed2ced7dcc50a9dbc2b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xb58ba8f7c4650f399ed415615f12bac919eb59e0",
+      "updated_at": 1504380470614
+    },
+    "1504381390158": {
+      "events": {
+        "0x318f4f9d3ccd05c117f96fa93478272620f34551b93d4f54bf8d3f47f2ea5753": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x1644d48eb12ce5ff460ae9f1bdc3ced13306012453421ed2ced7dcc50a9dbc2b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "string"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0xb512cb8b27bbb2054536e61b78ed0903710ad7da42081024aad02b5fc7029dc8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x850be527f20f3329b24216f853542c3f74eb01714d5c78699b7ee9066e1cf560": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x469e4e40d6494700f2d0c8ca8b8632b07a32c861",
+      "updated_at": 1504382697803
+    },
+    "1504382960499": {
+      "events": {
+        "0xb512cb8b27bbb2054536e61b78ed0903710ad7da42081024aad02b5fc7029dc8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x850be527f20f3329b24216f853542c3f74eb01714d5c78699b7ee9066e1cf560": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xd17eeffec6be7ded6b57e238a3c6cfe242d31dac",
+      "updated_at": 1504382976137
+    },
+    "1504383737315": {
+      "events": {
+        "0xb512cb8b27bbb2054536e61b78ed0903710ad7da42081024aad02b5fc7029dc8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x850be527f20f3329b24216f853542c3f74eb01714d5c78699b7ee9066e1cf560": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0xc673953cffca2da61767f98d959e2733e86c6c6ec49cd0abf1bd336260cdaab2": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0xbc4bbb78ee2dc52a97da98375a92c5275473b6a27c9e99f514b60053f7527bed": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x1ee86c8ea5c451cd9b4547e11cee7fdbe0f2161035689862085be7d20a48dd18": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "int256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "int256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xb491ffbe01363c1084b53b6ab38261b8ada6c12b",
+      "updated_at": 1504393234529
+    },
+    "1504394108902": {
+      "events": {
+        "0xb512cb8b27bbb2054536e61b78ed0903710ad7da42081024aad02b5fc7029dc8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0x850be527f20f3329b24216f853542c3f74eb01714d5c78699b7ee9066e1cf560": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x7f1cdd17175a6572b36a1cf605db3df32c818daaee5a9b1549fa84f6074c2db9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xba39666914117f9a8e86b5dd828bf0ce976808c5",
+      "updated_at": 1504396759924
+    },
+    "1504398519618": {
+      "events": {
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xedef2506187401459d9395d1fbc529cd9141c132",
+      "updated_at": 1504398526500
+    },
+    "1504398783552": {
+      "events": {
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        },
+        "0x514fcb68ab7048d4ef428d89bf53f27456a9aed4597bb2e92514d56b314c8653": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "renterAddress",
+              "type": "address"
+            }
+          ],
+          "name": "LogRentAmountTransferred",
+          "type": "event"
+        },
+        "0x76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "balance",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogContractBalance",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xa221adb902265d8837c6d5aefdf6ec1af90cdf02",
+      "updated_at": 1504401550953
+    },
+    "1504547501716": {
+      "events": {
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        },
+        "0x514fcb68ab7048d4ef428d89bf53f27456a9aed4597bb2e92514d56b314c8653": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "renterAddress",
+              "type": "address"
+            }
+          ],
+          "name": "LogRentAmountTransferred",
+          "type": "event"
+        },
+        "0x76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "balance",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogContractBalance",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x967074340cc125eac2c3cf7586d54ffa921ced38",
+      "updated_at": 1504553666715
+    },
+    "1504557310767": {
+      "events": {
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        },
+        "0x514fcb68ab7048d4ef428d89bf53f27456a9aed4597bb2e92514d56b314c8653": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "renterAddress",
+              "type": "address"
+            }
+          ],
+          "name": "LogRentAmountTransferred",
+          "type": "event"
+        },
+        "0x76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "balance",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogContractBalance",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xd5a2f86dd90cc48454887bdeba9bc6f465cf9273",
+      "updated_at": 1504557588406
+    },
+    "1504640915063": {
+      "events": {
+        "0x014a787d898cd598c1c333018aea6e067875807281794b95f3665b30270150f9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "renterAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "clientAdd",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "advanceAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rentAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "name": "advanceTimeoutHours",
+              "type": "int256"
+            }
+          ],
+          "name": "LogInit",
+          "type": "event"
+        },
+        "0xfd5a54116f93def82e4a93af7b554a9dab44c2eedd7fcad082e731d0032409f4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogEventCreatedWithItemHash",
+          "type": "event"
+        },
+        "0x67d9dec9a3b237d4a4f910781693b8bdc2be615e0d14a9a51c85b24de3be9f43": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "LogSenderDoesParticipate",
+          "type": "event"
+        },
+        "0x54c595db56d209990ec552e4daf35f6449abf78c9d26ca8304921ba946e1f40b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "party",
+              "type": "string"
+            }
+          ],
+          "name": "LogSenderConfirmedReturn",
+          "type": "event"
+        },
+        "0x2dc6ec2f06d5d8447e0fbbae7b25adb60fa6905b2e69e068027ed640408506ac": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "leftside",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rightside",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogAdvanceTimeoutElapsedAdvanceRefunded",
+          "type": "event"
+        },
+        "0x528fb5be1d6cbb331bbae86138d10974ca8316c47b5183b2704afb4c43bffdbf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "itemHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "LogItemAlreadyExistsAborting",
+          "type": "event"
+        },
+        "0xc8e0e924481a5f707137efc6326b7b34d9e5dbefa186253baf9ffc19220c2f6a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "count",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogItemCount",
+          "type": "event"
+        },
+        "0x514fcb68ab7048d4ef428d89bf53f27456a9aed4597bb2e92514d56b314c8653": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "renterAddress",
+              "type": "address"
+            }
+          ],
+          "name": "LogRentAmountTransferred",
+          "type": "event"
+        },
+        "0x76b2b3b73f786b0f5ecdeeca011ca6b3a3afca1c9f9c58cdc24fafdf6199aebc": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "balance",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogContractBalance",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x5c549e53691eed2f221256ec507b9b8d3f282ff1",
+      "updated_at": 1504653518847
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1504653518847
+}
