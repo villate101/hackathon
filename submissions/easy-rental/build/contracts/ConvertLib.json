@@ -1,0 +1,116 @@
+{
+  "contract_name": "ConvertLib",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "conversionRate",
+          "type": "uint256"
+        }
+      ],
+      "name": "convert",
+      "outputs": [
+        {
+          "name": "convertedAmount",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x60606040523415600e57600080fd5b5b60908061001d6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166396e4ee3d8114603c575b600080fd5b6048600435602435605a565b60405190815260200160405180910390f35b8181025b929150505600a165627a7a7230582072155485519cc9116f0bb2e196e074f424d04120f06768aec8c995198eddc36c0029",
+  "networks": {
+    "1502455174817": {
+      "events": {},
+      "links": {},
+      "address": "0x63089ceade67d0621f0d491da09cee930dc8f8e5",
+      "updated_at": 1502455182647
+    },
+    "1502457023699": {
+      "events": {},
+      "links": {},
+      "address": "0xbae933e0116cabd4b4d5197cb4f6cf325225aeb5",
+      "updated_at": 1502457552096
+    },
+    "1504308966110": {
+      "events": {},
+      "links": {},
+      "address": "0xba4baae7efbd0aba8732f5a3f99b918256feaefc",
+      "updated_at": 1504309010265
+    },
+    "1504350082053": {
+      "events": {},
+      "links": {},
+      "address": "0xa4a0f453341d88c3d68a903d04d645fd7c6393e0",
+      "updated_at": 1504380091527
+    },
+    "1504380459285": {
+      "events": {},
+      "links": {},
+      "address": "0xc69d7159830b45241e1b5e3fcbe77e2b8699216b",
+      "updated_at": 1504380470614
+    },
+    "1504381390158": {
+      "events": {},
+      "links": {},
+      "address": "0xca571cce1884dec01689db21a4c6cbdd7421951f",
+      "updated_at": 1504382697802
+    },
+    "1504382960499": {
+      "events": {},
+      "links": {},
+      "address": "0x5ea68bb69110898b2cb3a17144fec8226a596315",
+      "updated_at": 1504382976136
+    },
+    "1504383737315": {
+      "events": {},
+      "links": {},
+      "address": "0xda41a9eed9dc70e77f48815893bfc1d87f8fa44d",
+      "updated_at": 1504393234528
+    },
+    "1504394108902": {
+      "events": {},
+      "links": {},
+      "address": "0xe92f07d86f996b270b48514d3a3b325a57ef2225",
+      "updated_at": 1504396759923
+    },
+    "1504398519618": {
+      "events": {},
+      "links": {},
+      "address": "0xd2a7833f34653fc9e45fb9847ac8bcc3f72aa2f5",
+      "updated_at": 1504398526499
+    },
+    "1504398783552": {
+      "events": {},
+      "links": {},
+      "address": "0x8ae2f7d10831626872aa41e9055840830e8bf4f5",
+      "updated_at": 1504401550953
+    },
+    "1504547501716": {
+      "events": {},
+      "links": {},
+      "address": "0x5c35f77aab6c68fe4f1f91e0ce7dd9c96fb3d492",
+      "updated_at": 1504553666725
+    },
+    "1504557310767": {
+      "events": {},
+      "links": {},
+      "address": "0x4e950c58620d52f7c32960eb68ac856df4f767fe",
+      "updated_at": 1504557588406
+    },
+    "1504640915063": {
+      "events": {},
+      "links": {},
+      "address": "0xd2051331b2e76797a90af5d7269447166558763c",
+      "updated_at": 1504653518847
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1504653518847
+}
